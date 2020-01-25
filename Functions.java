@@ -776,3 +776,224 @@ public class Functions {
 
         return output;
     }
+ public static void hideStatusBar(Activity activity) {
+        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    public static RecyclerView.LayoutManager layoutManager(Context context, String direction, int gridCount){
+        LinearLayoutManager layoutManager;
+        if (direction.equals(Constant.VERTICAL)){
+            layoutManager= new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
+        }else if (direction.equals(Constant.HORIZONTAL)){
+            layoutManager= new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
+        }else {
+            layoutManager= new GridLayoutManager(context, gridCount);
+        }
+        return layoutManager;
+    }
+
+    public static int getScreenWidth(Context context){
+        int width=0;
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        if (wm!=null){
+            Display display = wm.getDefaultDisplay();
+            DisplayMetrics metrics = new DisplayMetrics();
+            display.getMetrics(metrics);
+            width = metrics.widthPixels;
+        }else {
+            width=200;
+        }
+        return width;
+    }
+
+    public static int getScreenHeight(Context context){
+        int height=0;
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        if (wm!=null){
+            wm.getDefaultDisplay().getMetrics(displayMetrics);
+             height = displayMetrics.heightPixels;
+        }
+        return height;
+
+    }
+
+
+    public static byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    public static void printHashMap(HashMap<String, String> hashMap){
+        for (Map.Entry<String,String> entry : hashMap.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            Log.d("\n\nallMapDataSukh\n",  "key=" + key + "  value=" + value);
+        }
+    }
+
+    public static void openDatePicker(final TextView tv, Context context){
+        final Calendar myCalendar = Calendar.getInstance();
+
+        myCalendar.add(Calendar.YEAR, -18);
+        myCalendar.add(Calendar.DAY_OF_MONTH, -1);
+
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(tv, myCalendar);
+            }
+        };
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context, date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMaxDate(myCalendar.getTimeInMillis());
+        datePickerDialog.show();
+
+    }
+
+    private static void updateLabel(TextView tv, Calendar calendar) {
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        tv.setText(sdf.format(calendar.getTime()));
+    }
+
+    public static String getCurrentDate(String dateFormat){
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat(dateFormat);
+        return df.format(c);
+    }
+
+
+    public static androidx.appcompat.app.AlertDialog showProgressBar(Context context){
+
+        androidx.appcompat.app.AlertDialog.Builder builder=new androidx.appcompat.app.AlertDialog.Builder(context);
+        builder.setCancelable(false);
+
+        View view= LayoutInflater.from(context).inflate(R.layout.progress_layout, null);
+        builder.setView(view);
+
+        androidx.appcompat.app.AlertDialog alertDialog=builder.create();
+
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCancelable(false);
+
+        alertDialog.show();
+
+        if (alertDialog.getWindow()!=null){
+            alertDialog.getWindow().getDecorView().setBackgroundResource(android.R.color.transparent);
+        }
+        return alertDialog;
+    }
+
+    public static void hideKeyboard(LinearLayout linearLayout, Context context) {
+        InputMethodManager inputMethodManager=(InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager!=null){
+            inputMethodManager.hideSoftInputFromWindow(linearLayout.getWindowToken(), 0);
+        }
+    }
+
+    public static String getAddress(Context context, String prefix, double lat, double lng) {
+        String add="";
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            Address obj = addresses.get(0);
+            add = prefix+obj.getAddressLine(0);
+          /*  add = add + "\n" + obj.getCountryName();
+            add = add + "\n" + obj.getCountryCode();
+            add = add + "\n" + obj.getAdminArea();
+            add = add + "\n" + obj.getPostalCode();
+            add = add + "\n" + obj.getSubAdminArea();
+            add = add + "\n" + obj.getLocality();
+            add = add + "\n" + obj.getSubThoroughfare();*/
+
+          Log.v("IGAsdfffdfgdfgdf", "Address" + add);
+
+
+        } catch (IOException e) {
+        }
+        return add;
+    }
+
+
+    public static double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return (dist);
+    }
+
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
+    }
+
+    public static void setImageWithGlide(Context context, final String thumbUrl, final ImageView imageView){
+        if (thumbUrl!=null){
+            if (thumbUrl.isEmpty()){
+                imageView.setImageResource(R.drawable.corrupt);
+            }else {
+                Picasso.get()
+                        .load(thumbUrl) // thumbnail url goes here
+                        .placeholder(R.drawable.corrupt)
+                        .resize(100, 100)
+                        .into(imageView, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                Picasso.get()
+                                        .load(thumbUrl) // image url goes here
+                                        .resize(600, 600)
+                                        .placeholder(imageView.getDrawable())
+                                        .into(imageView);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                imageView.setImageResource(R.drawable.corrupt);
+                            }
+                        });
+            }
+        }else {
+            imageView.setImageResource(R.drawable.corrupt);
+        }
+    }
+    public static void setImageWithGlide2(Context context, final String thumbUrl, final ImageView imageView){
+        if (thumbUrl!=null){
+            if (thumbUrl.isEmpty()){
+            }else {
+                Picasso.get()
+                        .load(thumbUrl) // thumbnail url goes here
+                        .into(imageView, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                Picasso.get()
+                                        .load(thumbUrl) // image url goes here
+                                        .placeholder(imageView.getDrawable())
+                                        .into(imageView);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                            }
+                        });
+            }
+        }else {
+        }
+    }
+
