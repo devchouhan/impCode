@@ -944,7 +944,7 @@ public class Functions {
         return (rad * 180.0 / Math.PI);
     }
 
-    public static void setImageWithGlide(Context context, final String thumbUrl, final ImageView imageView){
+    public static void setImageWithPicasso(Context context, final String thumbUrl, final ImageView imageView){
         if (thumbUrl!=null){
             if (thumbUrl.isEmpty()){
                 imageView.setImageResource(R.drawable.corrupt);
@@ -973,7 +973,7 @@ public class Functions {
             imageView.setImageResource(R.drawable.corrupt);
         }
     }
-    public static void setImageWithGlide2(Context context, final String thumbUrl, final ImageView imageView){
+    public static void setImageWithPicasso2(Context context, final String thumbUrl, final ImageView imageView){
         if (thumbUrl!=null){
             if (thumbUrl.isEmpty()){
             }else {
