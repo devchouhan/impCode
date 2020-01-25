@@ -1,0 +1,75 @@
+<resources>
+
+    <!--Default / Day mode theme-->
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundColor">@color/white</item>
+        <item name="textColor">@color/black</item>
+        <item name="tintColor">@color/colorAccent</item>
+        <item name="whiteTextColor">@color/white</item>
+        <item name="blackTextColor">@color/black</item>
+        <item name="devTextSize">14sp</item>
+        <item name="actionOverflowMenuStyle">@style/menuBgStyle_white</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+    </style>
+
+    <!--Dark / Night mode theme-->
+    <!-- Base application theme. -->
+    <style name="Dark" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/darkBlack</item>
+        <item name="colorPrimaryDark">@color/darkBlack</item>
+        <item name="colorAccent">@color/darkBlack</item>
+        <item name="backgroundColor">@color/black</item>
+        <item name="textColor">@color/white</item>
+        <item name="whiteTextColor">@color/black</item>
+        <item name="blackTextColor">@color/white</item>
+        <item name="tintColor">@color/darkBlack</item>
+        <item name="devTextSize">14sp</item>
+        <item name="actionOverflowMenuStyle">@style/menuBgStyle_black</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+    </style>
+
+    <!--animation-->
+
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+
+
+    <style name="menuBgStyle_black" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/black</item>
+    </style>
+
+
+    <style name="menuBgStyle_white" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="android:popupBackground">@color/white</item>
+    </style>
+
+
+    <style name="ExpandedAppBar" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="CollapsedAppBar" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>
