@@ -996,4 +996,16 @@ public class Functions {
         }else {
         }
     }
+    public static String changeDateFormat(String date, String foundFormat, String requiredFormat){
+        //yyyy-MM-dd hh:mm:ss
+        SimpleDateFormat spf=new SimpleDateFormat(foundFormat);
+        Date newDate= null;
+        try {
+            newDate = spf.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        spf= new SimpleDateFormat(requiredFormat);
+        return spf.format(newDate);
+    }
 
