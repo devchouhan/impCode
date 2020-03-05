@@ -1009,3 +1009,38 @@ public class Functions {
         return spf.format(newDate);
     }
 
+public static void openNotifyPopup(Context context, View view, final FrameLayout frameLayoutToShowHide, final ClickViewInterface clickViewInterface) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = null;
+        if (inflater != null) {
+            popupView = inflater.inflate(R.layout.menu_popup_layout, null);
+
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true;
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        popupWindow.setOutsideTouchable(false);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                frameLayoutToShowHide.setVisibility(View.GONE);
+            }
+        });
+
+
+        popupWindow.showAsDropDown(view);
+        frameLayoutToShowHide.setVisibility(View.VISIBLE);
+
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                frameLayoutToShowHide.setVisibility(View.GONE);
+                clickViewInterface.onClickViewCall(v, 0);
+                return true;
+            }
+        });
+    }
+    }
+
