@@ -1042,5 +1042,20 @@ public static void openNotifyPopup(Context context, View view, final FrameLayout
             }
         });
     }
+    
+    ///////transaction animations on click any view
+    
+      View sharedView = ivProfilePic;
+                    String transitionName = getString(R.string.profile_transition);
+                    ActivityOptions activityOptions = null;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        activityOptions = ActivityOptions.makeSceneTransitionAnimation(BaseActivity.this, android.util.Pair.create(sharedView, transitionName));
+                    }
+                    Intent toOpen = new Intent(BaseActivity.this, MyProfileActivity.class);
+                    if (activityOptions != null) {
+                        startActivity(toOpen, activityOptions.toBundle());
+                    } else {
+                        startActivity(toOpen);
+                    }
     }
 
