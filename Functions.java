@@ -1059,3 +1059,16 @@ public static void openNotifyPopup(Context context, View view, final FrameLayout
                     }
     }
 
+   private void removeDuplicates(ArrayList<SearchedLocationModel> list) {
+        int count = list.size();
+        for (int i = 0; i < count; i++) {
+            for (int j = i + 1; j < count; j++)
+            {
+                if (list.get(i).getPlaceAddress().equalsIgnoreCase(list.get(j).getPlaceAddress()))
+                {
+                    list.remove(j--);
+                    count--;
+                }
+            }
+        }
+
